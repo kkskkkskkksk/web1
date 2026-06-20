@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>致老爸 | 父亲节快乐</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", "PingFang SC", -apple-system, sans-serif;
+        }
+        body {
+            background: #f7f3ec;
+            color: #2c2c2c;
+            line-height: 1.8;
+            padding: 40px 20px;
+            max-width: 820px;
+            margin: 0 auto;
+            animation: pageFadeIn 1s ease-out;
+        }
+        @keyframes pageFadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ----- 标题 ----- */
+        .title {
+            font-size: 34px;
+            text-align: center;
+            color: #6b4423;
+            margin-bottom: 32px;
+            letter-spacing: 6px;
+            font-weight: 600;
+            text-shadow: 0 2px 6px rgba(107, 68, 35, 0.12);
+            animation: titleFloat 4s ease-in-out infinite;
+            position: relative;
+            padding-bottom: 12px;
+        }
+        .title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #c8a886, transparent);
+            border-radius: 2px;
+        }
+        @keyframes titleFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-4px); }
+        }
+
+        /* ----- 轮播 ----- */
+        .carousel {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            max-height: 550px;
+            border-radius: 14px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04);
+            margin-bottom: 36px;
+            position: relative;
+            overflow: hidden;
+            background: #d9cdbc;
+        }
+        @media (max-width: 600px) {
+            .carousel {
+                aspect-ratio: 4 / 3;
+                max-height: 400px;
+                border-radius: 10px;
+            }
+            .carousel-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 14px;
+            }
+        }
+
+        .carousel-wrap {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        .carousel-item {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .carousel-item.active {
+            opacity: 1;
+            z-index: 2;
+        }
+        .carousel-item .bg-blur {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
+            filter: blur(20px) brightness(0.85);
+            transform: scale(1.1);
+            transition: filter 0.3s;
+        }
+        .carousel-item .fg-image {
+            position: relative;
+            z-index: 1;
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            display: block;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            border-radius: 4px;
+            transition: transform 0.6s ease;
+        }
+        .carousel:hover .carousel-item.active .fg-image {
+            transform: scale(1.02);
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #fff;
+            font-size: 18px;
+            cursor: pointer;
+            z-index: 20;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+        .carousel-btn:hover {
+            background: rgba(255, 255, 255, 0.5);
+            color: #333;
+            transform: translateY(-50%) scale(1.05);
+        }
+        .prev { left: 16px; }
+        .next { right: 16px; }
+
+        .carousel-dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 20;
+        }
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.35);
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+        .dot.active {
+            width: 28px;
+            border-radius: 6px;
+            background: #fff;
+        }
+
+        /* ----- 文字卡片 ----- */
+        .text-box {
+            background: transparent;
+            padding: 0 8px;
+            border-left: none;
+            box-shadow: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .text-box p {
+            font-size: 18px;
+            line-height: 1.9;
+            margin-bottom: 0;
+            padding: 8px 0;
+            letter-spacing: 0.8px;
+            color: #3a3a3a;
+            opacity: 0.92;
+            position: relative;
+            padding-left: 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+        .text-box p::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 3px;
+            height: 0;
+            background: linear-gradient(180deg, #c8a886, #dbbaa0);
+            border-radius: 2px;
+            transition: height 0.6s ease;
+        }
+        .text-box p:hover::before {
+            height: 60%;
+        }
+        .text-box p:not(:last-child)::after {
+            content: '❝';
+            font-size: 12px;
+            color: #c8a886;
+            opacity: 0.3;
+            margin-left: 6px;
+            font-weight: 300;
+            display: inline-block;
+        }
+        .text-box p:last-child {
+            text-align: right;
+            padding-right: 8px;
+            border-left: none;
+            font-size: 16px;
+            color: #8a7a6a;
+            letter-spacing: 2px;
+            margin-top: 8px;
+            opacity: 0.8;
+        }
+        .text-box p:last-child::before {
+            display: none;
+        }
+        .text-box p:last-child::after {
+            content: '✦';
+            font-size: 10px;
+            color: #c8a886;
+            opacity: 0.5;
+            margin-left: 6px;
+        }
+
+        .button-row {
+            display: flex;
+            justify-content: center;
+            margin-top: 32px;
+            gap: 12px;
+        }
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 22px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #c8a886, #e1c8a0);
+            color: #3a2d1d;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            box-shadow: 0 8px 24px rgba(200, 168, 134, 0.18);
+            transition: transform 0.25s ease, box-shadow 0.25s ease, opacity 0.25s ease;
+        }
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(200, 168, 134, 0.24);
+            opacity: 0.95;
+        }
+
+        .foot {
+            margin-top: 48px;
+            text-align: center;
+            color: #aaa;
+            font-size: 13px;
+            letter-spacing: 2px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(200, 168, 134, 0.2);
+            position: relative;
+        }
+        .foot::before {
+            content: '·';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #f7f3ec;
+            padding: 0 12px;
+            color: #c8a886;
+            font-size: 18px;
+        }
+
+        @media (max-width: 600px) {
+            .text-box p {
+                font-size: 16px;
+                padding-left: 14px;
+                letter-spacing: 0.5px;
+            }
+            .text-box p:last-child {
+                font-size: 14px;
+            }
+            .title {
+                font-size: 26px;
+                letter-spacing: 4px;
+            }
+            .title::after {
+                width: 40px;
+            }
+        }
+
+        /* ========================================
+                   🎵 音乐播放器 - 右下角悬浮
+                   ======================================== */
+        .music-player {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 999;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: rgba(255, 248, 242, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(200, 168, 134, 0.25);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6b4423;
+            font-size: 24px;
+            user-select: none;
+        }
+        .music-player:hover {
+            transform: scale(1.08);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            background: rgba(255, 248, 242, 0.95);
+        }
+        /* 播放时的旋转动画 */
+        .music-player.playing .music-icon {
+            animation: spin 6s linear infinite;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        /* 音符图标 */
+        .music-player .music-icon {
+            display: inline-block;
+            font-size: 26px;
+            line-height: 1;
+            transition: transform 0.3s ease;
+        }
+        /* 暂停状态 - 图标变为静音符号 */
+        .music-player.paused .music-icon {
+            animation: none;
+        }
+        /* 小提示 - 引导文案 */
+        .music-player .hint-tip {
+            position: absolute;
+            bottom: calc(100% + 12px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            color: #fff;
+            font-size: 12px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+        .music-player .hint-tip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 6px solid transparent;
+            border-top-color: rgba(0, 0, 0, 0.7);
+        }
+        .music-player.show-hint .hint-tip {
+            opacity: 1;
+        }
+
+        @media (max-width: 600px) {
+            .music-player {
+                bottom: 20px;
+                right: 20px;
+                width: 48px;
+                height: 48px;
+                font-size: 20px;
+            }
+            .music-player .music-icon {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1 class="title">父亲节快乐，老爸</h1>
+
+    <!-- 轮播 -->
+    <div class="carousel">
+        <div class="carousel-wrap">
+            <div class="carousel-item active">
+                <div class="bg-blur" style="background-image: url('image/4.jpg');"></div>
+                <img class="fg-image" src="image/2.jpg" alt="和父亲合照1" loading="lazy">
+            </div>
+            <div class="carousel-item">
+                <div class="bg-blur" style="background-image: url('image/2.jpg');"></div>
+                <img class="fg-image" src="image/4.jpg" alt="和父亲合照2" loading="lazy">
+            </div>
+            <div class="carousel-item">
+                <div class="bg-blur" style="background-image: url('image/3.jpg');"></div>
+                <img class="fg-image" src="image/3.jpg" alt="和父亲合照3" loading="lazy">
+            </div>
+            <div class="carousel-item active">
+                <div class="bg-blur" style="background-image: url('image/1.jpg');"></div>
+                <img class="fg-image" src="image/1.jpg" alt="和父亲合照1" loading="lazy">
+            </div>
+            <div class="carousel-item">
+                <div class="bg-blur" style="background-image: url('image/5.jpg');"></div>
+                <img class="fg-image" src="image/5.jpg" alt="和父亲合照2" loading="lazy">
+            </div>
+            <div class="carousel-item">
+                <div class="bg-blur" style="background-image: url('image/6.jpg');"></div>
+                <img class="fg-image" src="image/6.jpg" alt="和父亲合照3" loading="lazy">
+            </div>
+            <div class="carousel-item active">
+                <div class="bg-blur" style="background-image: url('image/7.jpg');"></div>
+                <img class="fg-image" src="image/7.jpg" alt="和父亲合照1" loading="lazy">
+            </div>
+            <div class="carousel-item">
+                <div class="bg-blur" style="background-image: url('image/8.jpg');"></div>
+                <img class="fg-image" src="image/8.jpg" alt="和父亲合照2" loading="lazy">
+            </div>
+            <div class="carousel-item">
+                <div class="bg-blur" style="background-image: url('image/9.jpg');"></div>
+                <img class="fg-image" src="image/9.jpg" alt="和父亲合照3" loading="lazy">
+            </div>
+            <div class="carousel-item active">
+                <div class="bg-blur" style="background-image: url('image/10.jpg');"></div>
+                <img class="fg-image" src="image/10.jpg" alt="和父亲合照1" loading="lazy">
+            </div>
+            <div class="carousel-item">
+                <div class="bg-blur" style="background-image: url('image/11.jpg');"></div>
+                <img class="fg-image" src="image/11.jpg" alt="和父亲合照2" loading="lazy">
+            </div>
+            
+        </div>
+        <button class="carousel-btn prev">‹</button>
+        <button class="carousel-btn next">›</button>
+        <div class="carousel-dots">
+            <span class="dot active"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+        </div>
+    </div>
+
+    <!-- 文字 -->
+    <div class="text-box">
+        <p>老爸，父亲节快乐。</p>
+        <p>我今年22岁，慢慢才看懂你从前的沉默与付出。</p>
+        <p>谢谢你包容我的所有任性，支撑我往前走。</p>
+        <p>不求你万事操劳，只愿你往后轻松自在，平安健康。</p>
+        <p>2026父亲节 · 你的孩子</p>
+    </div>
+    <div class="button-row">
+        <a class="action-btn" href="wall.html">进入留言墙</a>
+    </div>
+    <div class="foot">
+        这个页面由我亲手编写、部署，是只属于我们两个人的纪念
+    </div>
+
+    <!-- ========================================
+    🎵 音乐播放器 HTML
+    ======================================== -->
+    <div class="music-player playing" id="musicPlayer">
+        <span class="music-icon">♪</span>
+        <span class="hint-tip">点击暂停音乐</span>
+    </div>
+
+    <script>
+        // ========================================
+        // 轮播逻辑
+        // ========================================
+        (function() {
+            const items = document.querySelectorAll('.carousel-item');
+            const dots = document.querySelectorAll('.dot');
+            const prevBtn = document.querySelector('.prev');
+            const nextBtn = document.querySelector('.next');
+            let currentIndex = 0;
+            let autoTimer = null;
+
+            function switchSlide(index) {
+                if (index < 0) index = items.length - 1;
+                if (index >= items.length) index = 0;
+                items.forEach((item, i) => {
+                    item.classList.toggle('active', i === index);
+                });
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === index);
+                });
+                currentIndex = index;
+            }
+
+            function nextSlide() {
+                switchSlide(currentIndex + 1);
+            }
+            function prevSlide() {
+                switchSlide(currentIndex - 1);
+            }
+
+            function startAutoPlay() {
+                if (autoTimer) clearInterval(autoTimer);
+                autoTimer = setInterval(nextSlide, 3000);
+            }
+            function stopAutoPlay() {
+                if (autoTimer) {
+                    clearInterval(autoTimer);
+                    autoTimer = null;
+                }
+            }
+
+            nextBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                stopAutoPlay();
+                nextSlide();
+                startAutoPlay();
+            });
+            prevBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                stopAutoPlay();
+                prevSlide();
+                startAutoPlay();
+            });
+            dots.forEach((dot, idx) => {
+                dot.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    stopAutoPlay();
+                    switchSlide(idx);
+                    startAutoPlay();
+                });
+            });
+
+            const carouselEl = document.querySelector('.carousel');
+            carouselEl.addEventListener('mouseenter', stopAutoPlay);
+            carouselEl.addEventListener('mouseleave', startAutoPlay);
+
+            startAutoPlay();
+        })();
+
+        // ========================================
+        // 🎵 音乐播放器逻辑 - 默认自动播放
+        // ========================================
+        (function() {
+            const player = document.getElementById('musicPlayer');
+            const icon = player.querySelector('.music-icon');
+            const hint = player.querySelector('.hint-tip');
+            const MUSIC_STATE_KEY = 'father_day_music_state';
+            let audio = null;
+            let isPlaying = true; // 默认认为是播放状态
+            let autoPlayAttempted = false;
+            let hintTimer = null;
+            let savedMusicState = null;
+
+            function loadMusicState() {
+                try {
+                    const raw = localStorage.getItem(MUSIC_STATE_KEY);
+                    if (!raw) return null;
+                    return JSON.parse(raw);
+                } catch {
+                    return null;
+                }
+            }
+
+            function saveMusicState() {
+                if (!audio) return;
+                const state = {
+                    isPlaying,
+                    currentTime: audio.currentTime || 0
+                };
+                localStorage.setItem(MUSIC_STATE_KEY, JSON.stringify(state));
+            }
+
+            // 创建 Audio 对象
+            function createAudio() {
+                if (!audio) {
+                    audio = new Audio('music/bgm1.mp3');
+                    audio.loop = true;
+                    audio.volume = 0.6;
+                    if (savedMusicState && typeof savedMusicState.currentTime === 'number') {
+                        audio.addEventListener('loadedmetadata', function() {
+                            if (audio.duration > savedMusicState.currentTime) {
+                                audio.currentTime = savedMusicState.currentTime;
+                            }
+                        }, { once: true });
+                    }
+                    audio.load();
+                }
+                return audio;
+            }
+
+            // 尝试自动播放
+            function attemptAutoPlay() {
+                if (autoPlayAttempted) return;
+                autoPlayAttempted = true;
+
+                const audioEl = createAudio();
+                audioEl.play().then(() => {
+                    // 自动播放成功
+                    isPlaying = true;
+                    player.classList.remove('paused');
+                    player.classList.add('playing');
+                    player.querySelector('.hint-tip').textContent = '点击暂停音乐';
+                    // 隐藏提示
+                    player.classList.remove('show-hint');
+                }).catch(() => {
+                    // 自动播放被浏览器拦截 → 等待用户点击页面任意位置
+                    isPlaying = false;
+                    player.classList.add('paused');
+                    player.classList.remove('playing');
+                    player.querySelector('.hint-tip').textContent = '点击页面播放音乐';
+
+                    // 显示提示
+                    player.classList.add('show-hint');
+                    clearTimeout(hintTimer);
+                    hintTimer = setTimeout(() => {
+                        player.classList.remove('show-hint');
+                    }, 5000);
+
+                    // 监听全局点击 → 触发播放
+                    const resumeOnInteraction = function() {
+                        audioEl.play().then(() => {
+                            isPlaying = true;
+                            player.classList.remove('paused');
+                            player.classList.add('playing');
+                            player.querySelector('.hint-tip').textContent = '点击暂停音乐';
+                            player.classList.remove('show-hint');
+                            // 移除监听，只触发一次
+                            document.removeEventListener('click', resumeOnInteraction);
+                            document.removeEventListener('touchstart', resumeOnInteraction);
+                        }).catch(() => {});
+                    };
+                    document.addEventListener('click', resumeOnInteraction);
+                    document.addEventListener('touchstart', resumeOnInteraction);
+                });
+            }
+
+            // 切换播放/暂停
+            function togglePlay() {
+                const audioEl = createAudio();
+
+                if (isPlaying) {
+                    // 暂停
+                    audioEl.pause();
+                    player.classList.remove('playing');
+                    player.classList.add('paused');
+                    isPlaying = false;
+                    player.querySelector('.hint-tip').textContent = '点击播放音乐';
+                    // 显示提示
+                    player.classList.add('show-hint');
+                    clearTimeout(hintTimer);
+                    hintTimer = setTimeout(() => {
+                        player.classList.remove('show-hint');
+                    }, 2000);
+                } else {
+                    // 播放
+                    audioEl.play().catch(() => {});
+                    player.classList.remove('paused');
+                    player.classList.add('playing');
+                    isPlaying = true;
+                    player.querySelector('.hint-tip').textContent = '点击暂停音乐';
+                    player.classList.remove('show-hint');
+                }
+            }
+
+            // 点击播放器
+            player.addEventListener('click', function(e) {
+                e.stopPropagation();
+                togglePlay();
+            });
+
+            // 页面加载后：先读取状态，再创建音频
+            window.addEventListener('load', function() {
+                savedMusicState = loadMusicState();
+                if (savedMusicState && savedMusicState.isPlaying === false) {
+                    isPlaying = false;
+                    player.classList.remove('playing');
+                    player.classList.add('paused');
+                    player.querySelector('.hint-tip').textContent = '点击播放音乐';
+                    player.classList.add('show-hint');
+                }
+                createAudio();
+                // 延迟一点点让页面先渲染
+                setTimeout(function() {
+                    if (savedMusicState && savedMusicState.isPlaying === false) {
+                        return;
+                    }
+                    attemptAutoPlay();
+                }, 300);
+            });
+
+            window.addEventListener('beforeunload', saveMusicState);
+            window.addEventListener('pagehide', saveMusicState);
+
+            // 暴露控制接口（可选）
+            window.__musicPlayer = {
+                play: () => { if (!isPlaying) togglePlay(); },
+                pause: () => { if (isPlaying) togglePlay(); },
+                toggle: togglePlay,
+                setVolume: (v) => { if (audio) audio.volume = Math.max(0, Math.min(1, v)); }
+            };
+        })();
+    </script>
+</body>
+</html>
